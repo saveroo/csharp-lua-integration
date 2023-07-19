@@ -45,9 +45,8 @@ jobs:
       
       # Use Nerdbank.GitVersioning to set version variables: https://github.com/AArnott/nbgv
       - name: Use Nerdbank.GitVersioning to set version variables
-        uses: aarnott/nbgv@v0.4.0
-        with:
-          setAllVars: true
+        uses: dotnet/nbgv@master
+        id: nbgv
 
       - name: Create GitHub Release
         id: create_release
@@ -55,7 +54,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: $env:NBGV_SimpleVersion.0 # Use the dynamic tag name
+          tag_name: ${{ steps.nbgv.outputs.SimpleVersion }} # Use the dynamic tag name
           release_name: Release ${{ steps.get_tag_name.outputs.stdout }} # Use the dynamic tag name as the release name
           body: Release notes for ${{ steps.get_tag_name.outputs.stdout }} # Modify release notes as needed
           draft: false
@@ -68,6 +67,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./${{ steps.get_solution_name.outputs.solution_name }}_Release.zip
-          asset_name: ${{ steps.get_solution_name.outputs.solution_name }}_Release.zip
+          asset_path: ./${{ steps.get_solution_name.outputs.solution_name }}_${{ steps.nbgv.outputs.SimpleVersion }}_Release.zip
+          asset_name: ${{ steps.get_solution_name.outputs.solution_name }}_${{ steps.nbgv.outputs.SimpleVersion }}_Release.zip
           asset_content_type: application/zip
