@@ -37,7 +37,7 @@ jobs:
         run: dotnet publish -c Release -r win-x64 --self-contained false # Change the runtime identifier as needed
 
       - name: Create Zip Archive
-        run: Compress-Archive -Path "D:\a\csharp-lua-integration\csharp-lua-integration\bin\Release\net6.0-windows\win-x64\publish\*" -DestinationPath "${{ steps.get_solution_name.outputs.solution_name }}_${{ steps.nbgv.outputs.SimpleVersion }}_Release.zip" # Use the dynamic zip file name
+        run: Compress-Archive -Path "D:\a\csharp-lua-integration\csharp-lua-integration\bin\Release\net6.0-windows\win-x64\publish\*" -DestinationPath "${{ steps.nbgv.outputs.SimpleVersion }}.${{ steps.nbgv.outputs.VersionRevision }}_Release.zip" # Use the dynamic zip file name
 
       - name: Get Tag Name
         id: get_tag_name
@@ -54,9 +54,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ steps.nbgv.outputs.SimpleVersion }} # Use the dynamic tag name
-          release_name: Release ${{ steps.get_tag_name.outputs.stdout }} # Use the dynamic tag name as the release name
-          body: Release notes for ${{ steps.get_tag_name.outputs.stdout }} # Modify release notes as needed
+          tag_name: ${{ steps.nbgv.outputs.SimpleVersion }}.${{ steps.nbgv.outputs.VersionRevision }} # Use the dynamic tag name
+          release_name: Release ${{ steps.get_tag_name.outputs.stdout }} ${{ steps.nbgv.outputs.SimpleVersion }}.${{ steps.nbgv.outputs.VersionRevision }} # Use the dynamic tag name as the release name
+          body: Release notes for ${{ steps.get_tag_name.outputs.stdout }} ${{ steps.nbgv.outputs.SimpleVersion }}.${{ steps.nbgv.outputs.VersionRevision }} # Modify release notes as needed
           draft: false
           prerelease: false
 
@@ -67,6 +67,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./${{ steps.get_solution_name.outputs.solution_name }}_${{ steps.nbgv.outputs.SimpleVersion }}_Release.zip
-          asset_name: ${{ steps.get_solution_name.outputs.solution_name }}_${{ steps.nbgv.outputs.SimpleVersion }}_Release.zip
+          asset_path: ./${{ steps.get_solution_name.outputs.solution_name }}_${{ steps.nbgv.outputs.SimpleVersion }}.${{ steps.nbgv.outputs.VersionRevision }}_Release.zip
+          asset_name: ${{ steps.get_solution_name.outputs.solution_name }}_${{ steps.nbgv.outputs.SimpleVersion }}.${{ steps.nbgv.outputs.VersionRevision }}_Release.zip
           asset_content_type: application/zip
