@@ -1,0 +1,29 @@
+﻿# .github/workflows/build.yml
+
+name: Build and Release
+on:
+  push:
+    branches:
+      - main # Change this to your main branch name
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '6.0' # Change this to your target .NET Core version
+
+      - name: Restore dependencies
+        run: dotnet restore
+
+      - name: Build the application
+        run: dotnet build --configuration Release
+
+      - name: Publish the application
+        run: dotnet publish -c Release -r win-x64 --self-contained false # Change the runtime identifier as needed
