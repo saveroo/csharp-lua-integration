@@ -1,0 +1,29 @@
+﻿# .travis.yml
+
+os: windows
+
+language: csharp
+
+solution: CSharpLuaIntegration.sln
+
+mono: none
+
+dotnet: 6.0
+
+install:
+  - dotnet restore
+
+script:
+  - dotnet build --configuration Release
+  - dotnet publish -c Release -r win-x64 --self-contained false # Change the runtime identifier as needed
+
+before_deploy:
+  - 7z a main_Release.zip D:\a\csharp-lua-integration\csharp-lua-integration\bin\Release\net6.0-windows\win-x64\publish\* # Adjust the path accordingly
+
+deploy:
+  provider: releases
+  api_key: $GITHUB_TOKEN
+  file: main_Release.zip
+  skip_cleanup: true
+  on:
+    tags: true
