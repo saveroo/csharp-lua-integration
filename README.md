@@ -32,6 +32,24 @@ The CSharp Lua Integration Showcase is a C# WinForms application that demonstrat
 5. Click the "Execute" button to run the selected Lua plugin.
 6. The result of the plugin execution will be displayed in a message box.
 
+## Example Plugin
+```lua
+-- Lua script: HelloWorld.lua
+
+-- Plugin information
+PluginName = 'HelloWorld Plugin'
+PluginAuthor = 'saveroo'
+PluginDescription = 'This is a basic Lua plugin that displays a hello lua message.'
+
+-- Entry point function which will be called within C#, for now only supports boolean return value for showcase.
+function Main()
+    -- Exposed C# API function
+    ShowMessageBox('Hello from Lua!', 'C# said')
+    -- Expects a boolean return value for flagging success or failure.
+    return true
+end
+```
+
 ## Folder Structure
 
 The folder structure of the Lua Plugin Showcase application is as follows:
