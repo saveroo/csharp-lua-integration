@@ -37,7 +37,7 @@ jobs:
         run: dotnet publish -c Release -r win-x64 --self-contained false # Change the runtime identifier as needed
 
       - name: Create Zip Archive
-        run: Compress-Archive -Path "D:\a\csharp-lua-integration\csharp-lua-integration\bin\Release\net6.0-windows\win-x64\publish\*" -DestinationPath "${{ steps.get_solution_name.outputs.solution_name }}_Release.zip" # Use the dynamic zip file name
+        run: Compress-Archive -Path "D:\a\csharp-lua-integration\csharp-lua-integration\bin\Release\net6.0-windows\win-x64\publish\*" -DestinationPath "${{ steps.get_solution_name.outputs.solution_name }}_${{ steps.nbgv.outputs.SimpleVersion }}_Release.zip" # Use the dynamic zip file name
 
       - name: Get Tag Name
         id: get_tag_name
