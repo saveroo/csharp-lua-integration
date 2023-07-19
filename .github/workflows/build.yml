@@ -41,7 +41,13 @@ jobs:
 
       - name: Get Tag Name
         id: get_tag_name
-        run: echo "Tag name is ${{ env.GITHUB_REF }}"
+        run: echo "Tag name is ${{ env.GITHUB_REF_NAME }}"
+      
+      # Use Nerdbank.GitVersioning to set version variables: https://github.com/AArnott/nbgv
+      - name: Use Nerdbank.GitVersioning to set version variables
+        uses: aarnott/nbgv@v0.4.0
+        with:
+          setAllVars: true
 
       - name: Create GitHub Release
         id: create_release
@@ -49,7 +55,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ steps.get_tag_name.outputs.stdout }} # Use the dynamic tag name
+          tag_name: $env:NBGV_SimpleVersion.0 # Use the dynamic tag name
           release_name: Release ${{ steps.get_tag_name.outputs.stdout }} # Use the dynamic tag name as the release name
           body: Release notes for ${{ steps.get_tag_name.outputs.stdout }} # Modify release notes as needed
           draft: false
