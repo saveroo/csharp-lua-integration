@@ -57,7 +57,7 @@ PluginDescription = 'This is a basic Lua plugin that displays a hello lua messag
 
 -- Entry point function which will be called within C#, for now only supports boolean return value for showcase.
 function Main()
-    LuaAPI.ShowMessageBox('Hello from Lua!', 'Lua Message')
+    ShowMessageBox('Hello from Lua!', 'Lua Message')
     return true
 end";
 
