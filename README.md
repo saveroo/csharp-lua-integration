@@ -1,5 +1,7 @@
 ﻿# C# Lua Integration Demo
 
+[![Build and Release](https://github.com/saveroo/csharp-lua-integration/actions/workflows/build.yml/badge.svg)](https://github.com/saveroo/csharp-lua-integration/actions/workflows/build.yml)
+
 The CSharp Lua Integration Showcase is a C# WinForms application that demonstrates how to integrate Lua scripts as plugins and execute them within a graphical user interface. It provides a platform for showcasing Lua script capabilities and allows users to interact with and execute Lua scripts that perform various tasks, such as manipulating registry keys, it can be extended to add new controls to the current interface as well.
 
 ## Features
